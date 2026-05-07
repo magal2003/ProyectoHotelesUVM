@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grand Luxe Hotel | Reservas</title>
+    <!-- Google Fonts: Outfit for a modern luxury feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+    <!-- Pantalla de Login Simulada -->
+    <div id="login-view" class="view active-view">
+        <div class="login-container">
+            <div class="login-card glass-panel">
+                <div class="logo-area">
+                    <i class="fa-solid fa-hotel logo-icon"></i>
+                    <h2>Grand Luxe</h2>
+                    <p>Sistema de Gestión</p>
+                </div>
+                <form id="login-form">
+                    <div class="input-group">
+                        <i class="fa-solid fa-user"></i>
+                        <input type="text" id="username" placeholder="Usuario" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fa-solid fa-lock"></i>
+                        <input type="password" id="password" placeholder="Contraseña" required>
+                    </div>
+                    <div class="input-group">
+                        <select id="role-select" required>
+                            <option value="" disabled selected>Selecciona un Rol</option>
+                            <option value="recepcion">Recepción</option>
+                            <option value="gerente">Gerente</option>
+                            <option value="admin">Administrador</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Ingresar <i class="fa-solid fa-arrow-right"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aplicación Principal -->
+    <div id="app-view" class="view">
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <i class="fa-solid fa-hotel"></i>
+                <span>Grand Luxe</span>
+            </div>
+            
+            <ul class="nav-links" id="nav-links">
+                <!-- Se llenarán dinámicamente con JS según el rol -->
+            </ul>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="avatar"><i class="fa-solid fa-user-tie"></i></div>
+                    <div class="details">
+                        <span id="current-user-name">Usuario</span>
+                        <small id="current-role-name">Rol</small>
+                    </div>
+                </div>
+                <button id="logout-btn" class="btn-icon" title="Cerrar Sesión"><i class="fa-solid fa-sign-out-alt"></i></button>
+            </div>
+        </nav>
+
+        <main class="main-content">
+            <header class="top-header">
+                <h1 id="page-title">Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn-icon"><i class="fa-regular fa-bell"></i></button>
+                    <div class="date-display" id="current-date"></div>
+                </div>
+            </header>
+
+            <div class="content-area">
+                <!-- VISTAS DE RECEPCIÓN -->
+                
+                <!-- Dashboard de Recepción -->
+                <section id="panel-dashboard" class="panel active-panel">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-door-open"></i></div>
+                            <div class="stat-details">
+                                <h3>Habitaciones Libres</h3>
+                                <p class="stat-number text-success">24</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
+                            <div class="stat-details">
+                                <h3>Llegadas Hoy</h3>
+                                <p class="stat-number text-warning">8</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-bed"></i></div>
+                            <div class="stat-details">
+                                <h3>Ocupación</h3>
+                                <p class="stat-number">72%</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-module mt-4">
+                        <div class="card-header">
+                            <h2>Próximas Llegadas</h2>
+                            <button class="btn-secondary btn-sm" onclick="app.showPanel('panel-nueva-reserva')"><i class="fa-solid fa-plus"></i> Nueva Reserva</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="luxury-table">
+                                <thead>
+                                    <tr>
+                                        <th>Cliente</th>
+                                        <th>Fechas</th>
+                                        <th>Pensión</th>
+                                        <th>Habitación</th>
+                                        <th>Estado</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Juan Pérez</td>
+                                        <td>25 Abr - 28 Abr</td>
+                                        <td>Media Pensión</td>
+                                        <td>Sin Asignar</td>
+                                        <td><span class="badge badge-warning">Pendiente</span></td>
+                                        <td><button class="btn-action" title="Hacer Check-in"><i class="fa-solid fa-check"></i></button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>María Gómez (TechCorp)</td>
+                                        <td>20 Abr - 24 Abr</td>
+                                        <td>Completa</td>
+                                        <td>202 (Suite)</td>
+                                        <td><span class="badge badge-info">Check-In</span></td>
+                                        <td><button class="btn-action" title="Gestionar"><i class="fa-solid fa-cog"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Nueva Reserva -->
+                <section id="panel-nueva-reserva" class="panel">
+                    <div class="card-module form-card">
+                        <h2>Registrar Nueva Reserva</h2>
+                        <form id="form-reserva" class="luxury-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Tipo de Cliente</label>
+                                    <select id="tipo-cliente" onchange="app.toggleClientFields()">
+                                        <option value="individual">Individual</option>
+                                        <option value="empresa">Corporativo (Empresa)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Nombre del Cliente</label>
+                                    <input type="text" placeholder="Ej. Juan Pérez" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row" id="fila-empresa" style="display: none;">
+                                <div class="form-group">
+                                    <label>Empresa Asociada</label>
+                                    <select>
+                                        <option value="1">TechCorp Solutions</option>
+                                        <option value="2">Global Marketing</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row" id="fila-tarjeta">
+                                <div class="form-group">
+                                    <label>Tarjeta de Crédito (Garantía)</label>
+                                    <div class="input-icon-wrapper">
+                                        <i class="fa-regular fa-credit-card"></i>
+                                        <input type="text" placeholder="0000 0000 0000 0000" id="tarjeta-credito" required>
+                                    </div>
+                                    <small>Requerida para reservas individuales</small>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Tipo de Reserva</label>
+                                    <select>
+                                        <option value="telefonica">Telefónica</option>
+                                        <option value="mostrador">Mostrador (Walk-in)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Pensión</label>
+                                    <select>
+                                        <option value="solo_dormir">Solo Dormir</option>
+                                        <option value="media">Media Pensión</option>
+                                        <option value="completa">Pensión Completa</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Fecha Entrada</label>
+                                    <input type="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Fecha Salida</label>
+                                    <input type="date" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="checkbox-container">
+                                    <input type="checkbox" id="req-no-fumador">
+                                    <span class="checkmark"></span>
+                                    Requisito: Habitación para no fumadores
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn-outline" onclick="app.showPanel('panel-dashboard')">Cancelar</button>
+                                <button type="submit" class="btn-primary">Crear Reserva</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- Check-out y Facturación -->
+                <section id="panel-checkout" class="panel">
+                    <div class="card-module">
+                        <h2>Check-out y Facturación</h2>
+                        <div class="search-bar mt-2 mb-4">
+                            <input type="text" placeholder="Buscar habitación o cliente..." class="search-input">
+                            <button class="btn-primary"><i class="fa-solid fa-search"></i> Buscar</button>
+                        </div>
+
+                        <!-- Simulación de un cliente listo para checkout -->
+                        <div class="checkout-details glass-panel">
+                            <div class="checkout-header">
+                                <div>
+                                    <h3>Habitación 202 - Suite</h3>
+                                    <p>María Gómez (TechCorp Solutions)</p>
+                                </div>
+                                <span class="badge badge-info">Empresa - Pago Diferido</span>
+                            </div>
+                            <div class="charges-list">
+                                <h4>Cargos de Estancia</h4>
+                                <ul>
+                                    <li><span>4 Noches x $250.00</span> <span>$1,000.00</span></li>
+                                    <li><span>Servicio a la habitación - Cena</span> <span>$45.50</span></li>
+                                    <li><span>Minibar</span> <span>$12.00</span></li>
+                                </ul>
+                                <div class="discount-row">
+                                    <span>Descuento Corporativo (15%)</span>
+                                    <span class="text-success">-$150.00</span>
+                                </div>
+                                <div class="total-row">
+                                    <span>Total a Facturar</span>
+                                    <span>$907.50</span>
+                                </div>
+                            </div>
+                            <div class="form-actions mt-3">
+                                <button class="btn-primary" onclick="app.processCheckout(true)"><i class="fa-solid fa-file-invoice"></i> Generar Factura Corporativa (Fin de mes)</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- VISTAS DE GERENCIA -->
+                
+                <section id="panel-empresas" class="panel">
+                    <div class="card-module">
+                        <div class="card-header">
+                            <h2>Gestión de Cuentas Corporativas</h2>
+                            <button class="btn-primary btn-sm"><i class="fa-solid fa-plus"></i> Nueva Empresa</button>
+                        </div>
+                        <table class="luxury-table mt-3">
+                            <thead>
+                                <tr>
+                                    <th>Empresa</th>
+                                    <th>Descuento</th>
+                                    <th>Estado de Cuenta</th>
+                                    <th>Facturación Pendiente</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>TechCorp Solutions</td>
+                                    <td>15%</td>
+                                    <td><span class="badge badge-success">Abierta</span></td>
+                                    <td>$907.50</td>
+                                    <td>
+                                        <button class="btn-action"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-action text-warning" title="Cerrar Cuenta"><i class="fa-solid fa-ban"></i></button>
+                                        <button class="btn-action text-info" title="Generar Factura Mensual"><i class="fa-solid fa-file-invoice-dollar"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Global Marketing</td>
+                                    <td>10%</td>
+                                    <td><span class="badge badge-success">Abierta</span></td>
+                                    <td>$0.00</td>
+                                    <td>
+                                        <button class="btn-action"><i class="fa-solid fa-pen"></i></button>
+                                        <button class="btn-action text-warning" title="Cerrar Cuenta"><i class="fa-solid fa-ban"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- VISTAS DE ADMINISTRACIÓN -->
+                <section id="panel-admin" class="panel">
+                    <div class="stats-grid mb-4">
+                         <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-users-gear"></i></div>
+                            <div class="stat-details">
+                                <h3>Usuarios del Sistema</h3>
+                                <p class="stat-number">3</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon"><i class="fa-solid fa-bed"></i></div>
+                            <div class="stat-details">
+                                <h3>Total Habitaciones</h3>
+                                <p class="stat-number">5</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-module">
+                        <h2>Mantenimiento del Sistema</h2>
+                        <p class="text-muted">Aquí el administrador puede realizar CRUD de habitaciones, usuarios y configuraciones generales.</p>
+                        <div class="mt-4">
+                            <button class="btn-outline mr-2"><i class="fa-solid fa-bed"></i> Gestionar Habitaciones</button>
+                            <button class="btn-outline"><i class="fa-solid fa-user-shield"></i> Gestionar Usuarios</button>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
