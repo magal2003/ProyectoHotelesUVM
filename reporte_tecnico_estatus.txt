@@ -1,0 +1,197 @@
+REPORTE TECNICO DEL ESTATUS ACTUAL DEL PROYECTO
+
+Proyecto: Grand Luxe Hotel / ProyectoHotelesUVM
+
+1. DESCRIPCION GENERAL
+
+El proyecto corresponde a un sistema web de gestion hotelera orientado al manejo de reservas, clientes, empresas corporativas, habitaciones, check-in, check-out y facturacion.
+
+Actualmente el sistema esta dividido en dos partes principales:
+
+- Frontend:
+  ProyectoHotelesUVM
+
+- Backend:
+  ProyectoHotelesUVMBackend
+
+La base de datos utilizada es MySQL, ejecutandose mediante XAMPP. El backend se conecta a esta base de datos usando las credenciales configuradas en el archivo .env.
+
+
+2. TECNOLOGIAS EMPLEADAS
+
+Frontend:
+- HTML
+- CSS
+- JavaScript vanilla
+
+Backend:
+- Node.js
+- Express.js
+- MySQL2
+- CORS
+- dotenv
+
+Base de datos:
+- MySQL mediante XAMPP
+
+Gestor de paquetes:
+- PNPM
+
+Se esta empleando PNPM en lugar de NPM principalmente por cuestiones de seguridad, eficiencia y mejor control de dependencias. PNPM mantiene una estructura mas estricta, evita dependencias fantasma y reduce duplicacion innecesaria de paquetes.
+
+
+3. ARQUITECTURA ACTUAL
+
+El sistema funciona bajo una arquitectura cliente-servidor.
+
+El frontend consume la API del backend mediante peticiones HTTP hacia:
+
+http://localhost:3000/api
+
+El backend Express expone endpoints REST y se conecta a MySQL. XAMPP se utiliza para levantar el servicio de MySQL y administrar la base de datos.
+
+La base de datos principal es:
+
+hotel_reservations
+
+
+4. MODULOS IMPLEMENTADOS
+
+Login por rol:
+- Administrador
+- Gerente
+- Recepcion
+- El login ya no requiere seleccionar rol manualmente
+- El rol se obtiene desde la cuenta registrada en la base de datos
+- Se agrego creacion de cuentas desde la interfaz
+- En la creacion de cuenta se captura nombre, correo, contrasena y rol
+
+Dashboard:
+- Habitaciones libres
+- Llegadas del dia
+- Porcentaje de ocupacion
+- Listado de proximas reservas
+
+Reservas:
+- Alta de nuevas reservas
+- Seleccion de cliente individual o corporativo
+- Seleccion de tipo de habitacion
+- Seleccion de habitacion especifica disponible
+- Validacion de disponibilidad por fechas
+- Validacion de disponibilidad por tipo de habitacion
+- Validacion de requisito de habitacion para no fumadores
+- Prevencion de habitaciones duplicadas en fechas traslapadas
+- Registro de tipo de reserva
+- Registro de tipo de pension
+- Registro de fechas de entrada y salida
+
+Check-in:
+- Cambio de estado de reserva pendiente a check-in
+- Actualizacion del estado de habitacion a ocupada
+
+Check-out y facturacion:
+- Listado de reservas en check-in
+- Calculo de noches
+- Calculo de estancia
+- Calculo de cargos extra
+- Aplicacion de descuento corporativo
+- Generacion de factura
+- Liberacion de habitacion
+- Cambio de reserva a check-out
+
+Empresas:
+- Listado de empresas corporativas
+- Registro basico de nueva empresa
+- Edicion basica de empresa
+- Apertura y cierre de cuenta corporativa
+- Generacion de factura mensual
+
+Administracion:
+- Resumen de usuarios
+- Resumen de habitaciones
+- Listado de habitaciones
+- Alta basica de habitaciones
+- Cambio de estado de habitaciones
+- Listado de usuarios
+- Seleccion controlada del tipo de habitacion al crear una habitacion
+- Tipos permitidos actualmente: Estandar y Suite
+- Validacion en backend para evitar tipos de habitacion no permitidos
+
+Notificaciones y bitacora de actividad:
+- Registro de acciones recientes dentro de la aplicacion
+- Alta de reservas
+- Check-in de reservas
+- Check-out y generacion de facturas
+- Liquidacion de cuentas corporativas
+- Registro y edicion de empresas
+- Apertura y cierre de cuentas corporativas
+- Registro de habitaciones
+- Cambio de estado de habitaciones
+- Visualizacion mediante modal de notificaciones
+- Persistencia local mediante localStorage del navegador
+
+
+5. ENDPOINTS PRINCIPALES DEL BACKEND
+
+POST /api/auth/login
+POST /api/auth/register
+GET /api/dashboard
+GET /api/empresas
+POST /api/empresas
+PATCH /api/empresas/:empresaId
+PATCH /api/empresas/:empresaId/cuenta
+POST /api/empresas/:empresaId/factura-mensual
+GET /api/habitaciones/disponibles
+GET /api/habitaciones/tipos
+POST /api/reservas
+PATCH /api/reservas/:reservaId/checkin
+GET /api/checkout
+POST /api/checkout/:reservaId
+GET /api/admin/resumen
+GET /api/admin/habitaciones
+POST /api/admin/habitaciones
+PATCH /api/admin/habitaciones/:habitacionId
+GET /api/admin/usuarios
+
+
+6. ESTATUS ACTUAL
+
+El proyecto ya no es solamente una maqueta frontend. Actualmente cuenta con backend funcional, conexion a MySQL y varias acciones conectadas directamente a la base de datos.
+
+El frontend ya consume datos reales desde el backend para dashboard, empresas, reservas, checkout y administracion. Ademas, varios botones que antes eran solo visuales ya ejecutan operaciones reales.
+
+Tambien se agrego una bitacora de actividad reciente en el frontend. Esta bitacora muestra eventos operativos del sistema, como nuevas reservas, altas de habitaciones, cambios de estado, check-in, check-out, liquidacion de cuentas y generacion de facturas. La informacion se almacena localmente en el navegador mediante localStorage, por lo que se conserva aun si se recarga la pagina.
+
+Se actualizo el flujo de autenticacion. El inicio de sesion ahora solo solicita correo y contrasena; el rol del usuario se determina desde la base de datos. La seleccion de rol se movio al proceso de creacion de cuenta, donde se capturan los datos necesarios del usuario.
+
+Se corrigio la logica de asignacion de habitaciones. Antes una habitacion podia repetirse en reservas con fechas traslapadas. Ahora el backend valida disponibilidad por rango de fechas, tipo de habitacion, estado de la reserva y requisito de no fumadores. Ademas, el frontend permite seleccionar el tipo de habitacion y la habitacion especifica disponible. Si no existe disponibilidad para el tipo seleccionado y las fechas indicadas, el sistema muestra un error y no permite crear la reserva.
+
+Tambien se limito la creacion de habitaciones a tipos controlados: Estandar y Suite. Aunque la base de datos actualmente guarda el tipo como texto y no existe una tabla separada de tipos, el frontend muestra un selector y el backend valida los valores permitidos.
+
+El proyecto se encuentra en una etapa funcional inicial, adecuada para pruebas locales y presentacion academica. Sin embargo, todavia requiere mejoras para considerarse una version completa o lista para produccion.
+
+
+7. PENDIENTES TECNICOS
+
+- Implementar autenticacion segura con bcrypt.
+- Agregar sesiones o JWT.
+- Crear CRUD completo de usuarios.
+- Crear formularios o modales en lugar de prompt/confirm.
+- Permitir edicion completa de habitaciones.
+- Permitir cancelar reservas.
+- Registrar no-show.
+- Agregar cargos extra desde la interfaz.
+- Asignar habitacion especifica manualmente.
+- Validar mejor fechas y disponibilidad.
+- Mejorar manejo de errores visuales.
+- Limpiar datos estaticos restantes del HTML.
+- Agregar pruebas.
+
+
+8. CONCLUSION
+
+El sistema actualmente cuenta con una base solida: frontend, backend separado, conexion a MySQL mediante XAMPP y consumo real de API.
+
+Se esta utilizando PNPM como gestor de paquetes por seguridad, eficiencia y mejor control de dependencias.
+
+El estado actual es funcional para pruebas locales y demostracion, aunque todavia requiere completar modulos administrativos, seguridad de autenticacion y mejoras de interfaz para alcanzar un nivel mas robusto.

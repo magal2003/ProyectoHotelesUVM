@@ -287,6 +287,13 @@ button {
     margin-top: 10px;
 }
 
+.login-secondary-btn {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+    padding: 12px;
+}
+
 /* ==========================================================================
    Main App Layout (Sidebar + Content)
    ========================================================================== */
@@ -691,4 +698,172 @@ button {
 .search-input:focus {
     border-color: var(--accent-primary);
     outline: none;
+}
+
+/* ==========================================================================
+   Modal & Toast UI
+   ========================================================================== */
+.modal-root {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: rgba(0, 0, 0, 0.58);
+    backdrop-filter: blur(8px);
+}
+
+.modal-root.active {
+    display: flex;
+}
+
+.modal-shell {
+    width: min(760px, 100%);
+    max-height: min(86vh, 780px);
+    overflow: hidden;
+    background: var(--bg-surface);
+    border: var(--border-glass);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-glass);
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-header {
+    padding: 20px 24px;
+    border-bottom: var(--border-glass);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.modal-body {
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.modal-footer {
+    padding: 18px 24px;
+    border-top: var(--border-glass);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.modal-form label {
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.modal-form input,
+.modal-form select,
+.modal-form textarea {
+    width: 100%;
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 14px;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+}
+
+.modal-form textarea {
+    min-height: 88px;
+    resize: vertical;
+}
+
+.modal-form input:focus,
+.modal-form select:focus,
+.modal-form textarea:focus {
+    border-color: var(--accent-primary);
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(212,175,55,0.1);
+}
+
+.modal-form select option {
+    background-color: var(--bg-surface);
+}
+
+.modal-section {
+    margin-top: 20px;
+}
+
+.modal-table-wrap {
+    overflow-x: auto;
+    border: var(--border-glass);
+    border-radius: var(--radius-md);
+}
+
+.inline-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.inline-select {
+    min-width: 150px;
+    background-color: rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 8px 10px;
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+}
+
+.toast-container {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 650;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    min-width: 260px;
+    max-width: 360px;
+    padding: 14px 16px;
+    border-radius: var(--radius-md);
+    background: var(--bg-surface);
+    border: var(--border-glass);
+    box-shadow: var(--shadow-glass);
+    color: var(--text-primary);
+    font-size: 0.92rem;
+}
+
+.toast.success { border-color: rgba(16, 185, 129, 0.35); }
+.toast.error { border-color: rgba(239, 68, 68, 0.4); }
+.toast.info { border-color: rgba(59, 130, 246, 0.35); }
+
+@media (max-width: 720px) {
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .modal-footer {
+        flex-direction: column-reverse;
+    }
+
+    .modal-footer button {
+        width: 100%;
+        justify-content: center;
+    }
 }

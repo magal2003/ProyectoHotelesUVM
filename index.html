@@ -26,21 +26,14 @@
                 <form id="login-form">
                     <div class="input-group">
                         <i class="fa-solid fa-user"></i>
-                        <input type="text" id="username" placeholder="Usuario" required>
+                        <input type="email" id="username" placeholder="Correo" required>
                     </div>
                     <div class="input-group">
                         <i class="fa-solid fa-lock"></i>
                         <input type="password" id="password" placeholder="Contraseña" required>
                     </div>
-                    <div class="input-group">
-                        <select id="role-select" required>
-                            <option value="" disabled selected>Selecciona un Rol</option>
-                            <option value="recepcion">Recepción</option>
-                            <option value="gerente">Gerente</option>
-                            <option value="admin">Administrador</option>
-                        </select>
-                    </div>
                     <button type="submit" class="btn-primary">Ingresar <i class="fa-solid fa-arrow-right"></i></button>
+                    <button type="button" id="create-account-btn" class="btn-secondary login-secondary-btn"><i class="fa-solid fa-user-plus"></i> Crear cuenta</button>
                 </form>
             </div>
         </div>
@@ -89,21 +82,21 @@
                             <div class="stat-icon"><i class="fa-solid fa-door-open"></i></div>
                             <div class="stat-details">
                                 <h3>Habitaciones Libres</h3>
-                                <p class="stat-number text-success">24</p>
+                                <p class="stat-number text-success" id="stat-rooms-free">0</p>
                             </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa-solid fa-suitcase-rolling"></i></div>
                             <div class="stat-details">
                                 <h3>Llegadas Hoy</h3>
-                                <p class="stat-number text-warning">8</p>
+                                <p class="stat-number text-warning" id="stat-arrivals-today">0</p>
                             </div>
                         </div>
                         <div class="stat-card">
                             <div class="stat-icon"><i class="fa-solid fa-bed"></i></div>
                             <div class="stat-details">
                                 <h3>Ocupación</h3>
-                                <p class="stat-number">72%</p>
+                                <p class="stat-number" id="stat-occupancy">0%</p>
                             </div>
                         </div>
                     </div>
@@ -163,14 +156,14 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Nombre del Cliente</label>
-                                    <input type="text" placeholder="Ej. Juan Pérez" required>
+                                    <input type="text" id="cliente-nombre" placeholder="Ej. Juan Pérez" required>
                                 </div>
                             </div>
                             
                             <div class="form-row" id="fila-empresa" style="display: none;">
                                 <div class="form-group">
                                     <label>Empresa Asociada</label>
-                                    <select>
+                                    <select id="empresa-id">
                                         <option value="1">TechCorp Solutions</option>
                                         <option value="2">Global Marketing</option>
                                     </select>
@@ -191,14 +184,14 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label>Tipo de Reserva</label>
-                                    <select>
+                                    <select id="tipo-reserva">
                                         <option value="telefonica">Telefónica</option>
                                         <option value="mostrador">Mostrador (Walk-in)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Pensión</label>
-                                    <select>
+                                    <select id="tipo-pension">
                                         <option value="solo_dormir">Solo Dormir</option>
                                         <option value="media">Media Pensión</option>
                                         <option value="completa">Pensión Completa</option>
@@ -208,12 +201,28 @@
 
                             <div class="form-row">
                                 <div class="form-group">
+                                    <label>Tipo de Habitación</label>
+                                    <select id="tipo-habitacion" required>
+                                        <option value="">Cargando tipos...</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Habitación Disponible</label>
+                                    <select id="habitacion-id" required>
+                                        <option value="">Selecciona fechas y tipo</option>
+                                    </select>
+                                    <small id="habitacion-disponibilidad-msg">La disponibilidad se calcula por fecha.</small>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
                                     <label>Fecha Entrada</label>
-                                    <input type="date" required>
+                                    <input type="date" id="fecha-entrada" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Fecha Salida</label>
-                                    <input type="date" required>
+                                    <input type="date" id="fecha-salida" required>
                                 </div>
                             </div>
                             
@@ -243,7 +252,7 @@
                         </div>
 
                         <!-- Simulación de un cliente listo para checkout -->
-                        <div class="checkout-details glass-panel">
+                        <div id="checkout-list" class="checkout-details glass-panel">
                             <div class="checkout-header">
                                 <div>
                                     <h3>Habitación 202 - Suite</h3>
@@ -350,6 +359,9 @@
             </div>
         </main>
     </div>
+
+    <div id="modal-root" class="modal-root" aria-hidden="true"></div>
+    <div id="toast-container" class="toast-container" aria-live="polite"></div>
 
     <script src="js/app.js"></script>
 </body>
